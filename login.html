@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de Login, Registro e Recuperação de Senha.">
+    <title>Login/Registro</title>
+    <link rel="stylesheet" href="style/crud.css"> <!-- Arquivo CSS Externo -->
+
+      
+</head>
+<body>
+    <!-- Formulário de Login -->
+    <div id="loginForm" class="form-container">
+        <h2 id="loginTitle">Login</h2>
+        <input type="email" id="loginEmail" placeholder="Digite seu Email" required>
+        <input type="password" id="loginPassword" placeholder="Digite sua Senha" required>
+        <button onclick="Login()">Entrar</button>
+        <button class="forgot-password" onclick="toggleForgotPassword()">Esqueceu a Senha?</button>
+        <p>Não tem uma conta? <button onclick="toggleRegister()">Registre-se</button></p>
+    </div>
+    
+    <!-- Formulário de Registro -->
+    <div id="registerForm" class="form-container hidden">
+        <h2 id="registerTitle">Registro</h2>
+        <input type="email" id="registerEmail" placeholder="Digite seu Email" required>
+        <input type="password" id="registerPassword" placeholder="Digite sua Senha" required>
+        <button onclick="cadastrar()">Registrar</button>
+        <p>Já tem uma conta? <button onclick="toggleLogin()">Login</button></p>
+    </div>
+
+    <!-- Formulário de Recuperação de Senha -->
+    <div id="forgotPasswordForm" class="form-container hidden">
+        <h2>Recuperar Senha</h2>
+        <input type="email" id="forgotEmail" placeholder="Digite seu Email" required>
+        <button onclick="revealPassword()">Revelar Senha</button>
+        <button onclick="resetPassword()">Alterar Senha</button>
+        <button class="forgot-password" onclick="toggleLogin()">Voltar ao Login</button>
+    </div>
+
+    <script>
+        // Alternar entre Login e Registro
+        function toggleRegister() {
+            document.getElementById("loginForm").classList.add("hidden");
+            document.getElementById("registerForm").classList.remove("hidden");
+        }
+
+        function toggleLogin() {
+            document.getElementById("registerForm").classList.add("hidden");
+            document.getElementById("forgotPasswordForm").classList.add("hidden");
+            document.getElementById("loginForm").classList.remove("hidden");
+        }
+
+        // Alternar entre Login e Recuperação de Senha
+        function toggleForgotPassword() {
+            document.getElementById("loginForm").classList.add("hidden");
+            document.getElementById("forgotPasswordForm").classList.remove("hidden");
+        }
+    </script>
+
+    <script src="app.js"></script> <!-- Arquivo JS Externo -->
+</body>
+</html>

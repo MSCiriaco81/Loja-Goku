@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho</title>
+    <link rel="stylesheet" href="style/styles_carrinho.css"> 
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <script src="app.js"></script>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="bg-warning py-3">
+        <div class="container d-flex justify-content-between align-items-center position-relative">
+            <!-- Nome da Loja -->
+            <div>
+                <a href="no_login_index.html">
+                    <img src="img/Logo.png" alt="tipografia loja dragonball" style="height: 40%; width: 40%;">
+                </a> 
+            </div>
+
+            <!-- Botão do Carrinho com contador -->
+            <button class="btn btn-warning" id="carrinhoBtn">
+                <img src="img/carrinho.png" width="40px" alt="Carrinho">
+                <span id="contador-carrinho" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    0
+                    <span class="visually-hidden"></span>
+                </span>
+            </button>
+
+            <!-- Carrinho de Compras -->
+            <div id="carrinho-lista">
+                <h4>Seu Carrinho</h4>
+                <ul></ul> <!-- Local onde os itens serão exibidos -->
+                <button onclick="esconderCarrinho()">Fechar Carrinho</button>
+            </div>
+
+            <!-- Botão logout -->
+            <div>
+                <button class="btn btn-warning position-relative" style="margin: 10px;">
+                    <a href="index.html" class="button" style="color: black;">
+                        Logout
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                        </svg>
+                    </a>                 
+                </button>
+            </div>
+        </div>
+    </header>
+    <!-- Corpo do Carrinho -->
+    <main class="container mt-5">
+        <h2 class="text-center">Carrinho de Compras</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Total</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody id="produtos-carrinho">
+                <!-- Itens do carrinho serão preenchidos dinamicamente aqui -->
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between">
+            <h3>Total: R$<span id="sub-total">0.00</span></h3>
+            <button class="btn btn-warning" onclick="finalizarCompra()">Finalizar compra</button>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="text-center py-3 mt-5">
+        <p>&copy; 2024 Loja Dragon Ball. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="app.js"></script>
+
+    <script>
+        function atualizarCarrinho() {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            let total = 0;
+            let carrinhoHTML = '';
+
+            carrinho.forEach(item => {
+                total += item.preco * item.quantidade;
+                carrinhoHTML += `
+                    <tr>
+                        <td>
+                            <div class="product">
+                                <img src="${item.imagem}" alt="${item.nome}" width="50px" height="50px">
+                                <div class="info">
+                                    <div class="title">${item.nome}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>R$ ${item.preco.toFixed(2)}</td>
+                        <td>
+                            <div class="qty">
+                                <button onclick="alterarQuantidade('${item.nome}', -1)" class="btn btn-sm btn-danger"><i class="fas fa-minus"></i></button>
+                                <span>${item.quantidade}</span>
+                                <button onclick="alterarQuantidade('${item.nome}', 1)" class="btn btn-sm btn-success"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </td>
+                        <td>R$ ${(item.quantidade * item.preco).toFixed(2)}</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" onclick="removerDoCarrinho('${item.nome}')">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('produtos-carrinho').innerHTML = carrinhoHTML;
+            document.getElementById('sub-total').innerText = total.toFixed(2);
+            document.getElementById('contador-carrinho').innerText = carrinho.length;
+        }
+
+        function alterarQuantidade(nomeProduto, quantidade) {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            const item = carrinho.find(i => i.nome === nomeProduto);
+            if (item) {
+                item.quantidade += quantidade;
+                if (item.quantidade <= 0) {
+                    removerDoCarrinho(nomeProduto);
+                } else {
+                    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+                    atualizarCarrinho();
+                }
+            }
+        }
+
+        function removerDoCarrinho(nomeProduto) {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            carrinho = carrinho.filter(item => item.nome !== nomeProduto);
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+            atualizarCarrinho();
+        }
+
+        function finalizarCompra() {
+            alert('Compra finalizada com sucesso!');
+            localStorage.removeItem('carrinho');
+            atualizarCarrinho();
+        }
+
+        // Carrega o carrinho ao iniciar a página
+        window.onload = function() {
+            atualizarCarrinho();
+        };
+    </script>
+</body>
+</html>

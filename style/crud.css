@@ -1,0 +1,143 @@
+/* Estilos globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.form-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.form-container button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.form-container button:hover {
+    background-color: #45a049;
+}
+
+.switch-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.switch-container label {
+    margin-left: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+p {
+    text-align: center;
+}
+
+/* Estilizando o botão de alternância */
+.form-container .switch-container input[type="checkbox"] {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    -webkit-appearance: none;
+    background-color: #ddd;
+    outline: none;
+    border-radius: 50px;
+    transition: 0.4s;
+}
+
+.form-container .switch-container input:checked {
+    background-color: #4CAF50;
+}
+
+.form-container .switch-container input::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    background-color: white;
+    transition: 0.4s;
+}
+
+.form-container .switch-container input:checked::before {
+    transform: translateX(20px);
+}
+
+.form-container button.forgot-password {
+    background-color: #2196F3;
+    margin-top: 5px;
+}
+
+.form-container button.forgot-password:hover {
+    background-color: #0b7dda;
+}
+
+body {
+
+    height: 600px;
+    width: 600px;
+  }
+  
+
+/* crud.css | http://127.0.0.1:5500/style/crud.css */
+  
+  #loginForm {
+
+    margin-left: 250px;
+    margin-top: 0px;
+    margin-bottom: 75px;
+  }
+  #registerForm {
+
+    margin-left: 250px;
+    margin-top: 0px;
+    margin-bottom: 75px;
+  }
+  
+  #forgotPasswordForm {
+
+    margin-left: 250px;
+    margin-top: 0px;
+    margin-bottom: 75px;
+  }
