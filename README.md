@@ -8,6 +8,6 @@ Yasmin Aparecida Fernandes Gonçalves
 
 link para o site: https://msciriaco81.github.io/Loja-Goku/
 
-Login: (allan, larissa, matheus, yasmin)
+Login: (allan@gmail.com, larissa@gmail.com, matheus@gmail.com, yasmin@gmail.com)
 Senha: 1234
 
